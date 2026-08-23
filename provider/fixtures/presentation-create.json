@@ -1,0 +1,9 @@
+{
+  "$comment": "A Presentation returned directly at the response top level, not wrapped in a `presentation` property. presentationId and title are properties of Google's Presentation response schema and are the stable surface this create action reads; the discovery method does not promise which optional layout or slide fields are populated on creation.",
+  "operation": "presentation_create",
+
+  "response": {
+    "presentationId": { "$fake": "id", "prefix": "1Slide" },
+    "title": { "$config": "title", "as": "string", "default": "Untitled presentation" }
+  }
+}

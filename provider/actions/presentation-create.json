@@ -1,0 +1,45 @@
+{
+  "$comment": "Read from Google's own discovery document, not docs prose: presentations.create -> POST v1/presentations, request Presentation, response Presentation. The method creates a BLANK presentation and ignores request content; title is the only field this simple action sends.",
+  "operation": "presentation_create",
+  "kind": "presentation",
+  "title": "Google Slides presentation",
+  "description": "Create a blank Google Slides presentation.",
+  "summary": "create a blank presentation",
+  "docs": "https://developers.google.com/workspace/slides/api/reference/rest/v1/presentations/create",
+  "sideEffects": "unsafe-to-replay",
+
+  "$idempotencyComment": "Google offers no idempotency key on presentations.create -- the discovery method declares no parameters and no idempotency header. So this is honestly unsafe-to-replay with no way to make it safe: a retried durable run creates a SECOND presentation.",
+
+  "request": {
+    "method": "POST",
+    "path": "/v1/presentations",
+    "encoding": "json"
+  },
+
+  "config": [
+    {
+      "type": "text",
+      "key": "title",
+      "label": "Title",
+      "required": true,
+      "description": "The title of the new blank presentation.",
+      "send": { "as": "title", "value": "string" },
+      "$comment": "Presentation is a large response schema, but create is not a way to seed slides or layouts. Google's method says request content is ignored, so exposing those fields would accept configuration that can never work."
+    }
+  ],
+
+  "$presentationIdComment": "The method can accept a caller-supplied presentationId and otherwise generates one. This action deliberately leaves ID generation to Google: exposing a client-chosen global resource id adds collision and validation concerns to an action whose purpose is simply to create a blank presentation by title.",
+
+  "outputShape": [
+    { "path": "data.presentationId", "type": "string", "description": "The id of the created presentation." },
+    { "path": "data.title", "type": "string", "description": "The title Google stored." }
+  ],
+
+  "$outputComment": "The Presentation is returned at the HTTP response top level. The connector runtime places that body under `data`; there is no provider-specific wrapper such as `{presentation: ...}`.",
+
+  "contract": {
+    "$comment": "The exact Presentation properties this action sends and reads. Drift-check projects these names from the discovery schema instead of treating the endpoint as unresearched.",
+    "sends": ["title"],
+    "reads": ["presentationId", "title"]
+  }
+}
