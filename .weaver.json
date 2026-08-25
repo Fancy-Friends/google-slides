@@ -55,7 +55,7 @@
     "packages/ui/package.json": "53442bbf61e96fa117d5e4c1d316dd37534846b2e8a6606463806a0fd5bdfb45",
     "packages/ui/src/index.ts": "5229cf680cb09188e3a8705bd982995ac11e2d33f98209b72d76e89ffc9229c3",
     "packages/ui/src/kinds/presentation-create.ts": "fa4edd40d8468b9c50b5a2a2130fd25bb234b56270ea2cf9441442b0746c6710",
-    "packages/ui/src/service.ts": "48bb70bffd9167e0445733c8e77fa0da58c18a50faea63359eea1d58517c678f",
+    "packages/ui/src/service.ts": "88e0a2ed41e8459e156e27666cfac66d1534ebd07e656453b8768cbd6ab484ce",
     "packages/ui/tests/kinds.test.ts": "910a9d2314f67b23099bbee960e3eadd61de328aac8328dee353bd92a5f43351",
     "packages/ui/tsconfig.json": "2cdc4c3b504406aa9553ffad3d936061d66be410030ac3571f0fc81d737d6875",
     "packages/ui/tsup.config.ts": "4067a7f50c1fbbc3c25addab30d28ccada74cc2f80f1b23aecbdc85a3fa50bc0",
