@@ -4,7 +4,8 @@
   "description": "Google Slides's authoring surface for fancy-flow — the node kinds, their config schemas and their declared output shapes. React on every host; carries no executor.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Fancy-Friends/google-slides.git"
+    "url": "git+https://github.com/Fancy-Friends/google-slides.git",
+    "directory": "packages/ui"
   },
   "homepage": "https://github.com/Fancy-Friends/google-slides#readme",
   "bugs": "https://github.com/Fancy-Friends/google-slides/issues",
