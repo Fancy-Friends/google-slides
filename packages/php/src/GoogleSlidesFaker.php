@@ -48,7 +48,7 @@ final class GoogleSlidesFaker
     }
 
     /** @param array<string,mixed> $config */
-    private static function PresentationCreate(array $config, mixed $fake): array
+    private static function PresentationCreate(array $config, mixed $fake): array|\stdClass
     {
         return [
         'presentationId' => $fake->id('1Slide'),
