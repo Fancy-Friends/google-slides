@@ -51,7 +51,7 @@
     "packages/py/src/fancy_google_slides/_runtime.py": "21d045bd027630e60d4ad70a227b4c3acdd7c290f1a27a5e1c3557e00e43df52",
     "packages/py/src/fancy_google_slides/actions/__init__.py": "96339ed60a94ff9627420780ad27b1a6e22c22f2ddfce8540b4917740cc65dea",
     "packages/py/src/fancy_google_slides/actions/presentation_create.py": "70369f5494f6e344f933603ea784663a541c94197632b0dd02b8634512d7c23b",
-    "packages/py/src/fancy_google_slides/faker.py": "d216089f9ddc3eea02bb21f57184e26e5beebdbb629c91952b4255b3ece20595",
+    "packages/py/src/fancy_google_slides/faker.py": "383407d1c2e14af491555510116a00bd540033a5c92473785f2da0de3022f32a",
     "packages/py/src/fancy_google_slides/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "packages/py/src/fancy_google_slides/service.py": "7b040e452b4735919fc873f7095aac29275b57453d7525e7e1875d94bf0b87b1",
     "packages/py/tests/test_faker.py": "c17b88214d00e660ed00460d3453fc6057d7f2c2f9d4c4c390b73cca421d1950",
