@@ -49,6 +49,46 @@ const GOLDENS = [
       "presentationId": "1Slide_fake_069dd03c2fdb",
       "title": "Untitled presentation"
     }
+  },
+  {
+    "operation": "presentation_get",
+    "config": {},
+    "expected": {
+      "presentationId": "1Slide_fake_f5354a08d2f8",
+      "title": "Untitled presentation",
+      "locale": "en",
+      "slides": [
+        {
+          "objectId": "slide_fake_186e6009598a",
+          "pageElements": [
+            {
+              "objectId": "title_fake_92815b64845d",
+              "shape": {
+                "shapeType": "TEXT_BOX",
+                "placeholder": {
+                  "type": "CENTERED_TITLE"
+                },
+                "text": {
+                  "textElements": []
+                }
+              }
+            },
+            {
+              "objectId": "subtitle_fake_7603348102f0",
+              "shape": {
+                "shapeType": "TEXT_BOX",
+                "placeholder": {
+                  "type": "SUBTITLE"
+                },
+                "text": {
+                  "textElements": []
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
   }
 ];
 
@@ -65,7 +105,7 @@ for (const { operation, config, expected } of GOLDENS) {
 
 // The ui package is a separate tarball, and js depends on it by its
 // published name — so this also proves that dependency resolves.
-assert.equal(GOOGLE_SLIDES_KINDS.length, 1);
+assert.equal(GOOGLE_SLIDES_KINDS.length, 2);
 for (const kind of GOOGLE_SLIDES_KINDS) {
   const keys = kind.configSchema.map((field) => field.key);
   assert.equal(keys[0], "connection");

@@ -1,0 +1,33 @@
+{
+  "$comment": "A freshly created presentation's default first slide -- title and subtitle placeholder shapes, each with its own objectId and empty text. This is the exact shape a host meets right after presentation_create: two placeholders to target, nothing in them yet.",
+  "operation": "presentation_get",
+
+  "response": {
+    "presentationId": { "$config": "presentationId", "as": "string", "fallback": { "$fake": "id", "prefix": "1Slide" } },
+    "title": "Untitled presentation",
+    "locale": "en",
+    "slides": [
+      {
+        "objectId": { "$fake": "id", "prefix": "slide" },
+        "pageElements": [
+          {
+            "objectId": { "$fake": "id", "prefix": "title" },
+            "shape": {
+              "shapeType": "TEXT_BOX",
+              "placeholder": { "type": "CENTERED_TITLE" },
+              "text": { "textElements": [] }
+            }
+          },
+          {
+            "objectId": { "$fake": "id", "prefix": "subtitle" },
+            "shape": {
+              "shapeType": "TEXT_BOX",
+              "placeholder": { "type": "SUBTITLE" },
+              "text": { "textElements": [] }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

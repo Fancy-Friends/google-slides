@@ -36,6 +36,49 @@ test("presentation_create fakes the shape Google Slides publishes", () => {
   });
 });
 
+test("presentation_get fakes the shape Google Slides publishes", () => {
+  const config = {};
+
+  const faked = googleSlidesFaker("presentation_get", fakeRequest("google_slides", "presentation_get", config));
+
+  assert.deepEqual(faked, {
+    "presentationId": "1Slide_fake_f5354a08d2f8",
+    "title": "Untitled presentation",
+    "locale": "en",
+    "slides": [
+      {
+        "objectId": "slide_fake_186e6009598a",
+        "pageElements": [
+          {
+            "objectId": "title_fake_92815b64845d",
+            "shape": {
+              "shapeType": "TEXT_BOX",
+              "placeholder": {
+                "type": "CENTERED_TITLE"
+              },
+              "text": {
+                "textElements": []
+              }
+            }
+          },
+          {
+            "objectId": "subtitle_fake_7603348102f0",
+            "shape": {
+              "shapeType": "TEXT_BOX",
+              "placeholder": {
+                "type": "SUBTITLE"
+              },
+              "text": {
+                "textElements": []
+              }
+            }
+          }
+        ]
+      }
+    ]
+  });
+});
+
 test("an operation with no fixture throws rather than inventing a shape", () => {
   assert.throws(() => googleSlidesFaker("no_such_operation", fakeRequest("google_slides", "no_such_operation", {})), /no fake response/);
 });

@@ -8,6 +8,18 @@ The four packages share one version, because they are generated from one
 `provider/` definition and a version that meant something different in each
 would be a version nobody could reason about.
 
+## [0.4.0] — 2026-10-01
+
+### Added
+
+- **`presentation_get`** — read a presentation's slides and the objectId
+  of every element on them. No scope change. This is the prerequisite
+  for targeting a specific shape or placeholder with a future edit —
+  `presentations.batchUpdate` operates on objectIds, and until now there
+  was no way to discover one. `insertText`-style editing is NOT included
+  yet; it is a natural next step once this read side exists, not
+  bundled in here.
+
 ## [0.3.4] — 2026-09-12
 
 ### Changed

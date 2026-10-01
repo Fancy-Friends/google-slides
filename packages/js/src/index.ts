@@ -22,3 +22,4 @@
 export * from "./service.js";
 export * from "./faker.js";
 export * from "./actions/presentation-create.js";
+export * from "./actions/presentation-get.js";

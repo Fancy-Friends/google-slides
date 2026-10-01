@@ -22,6 +22,7 @@ import assert from "node:assert/strict";
 import type { PreparedRequest } from "@particle-academy/fancy-connector-core";
 
 import { googleSlidesPresentationCreate } from "../src/actions/presentation-create.js";
+import { googleSlidesPresentationGet } from "../src/actions/presentation-get.js";
 
 /** Capture the prepared request instead of sending it. */
 function capture() {
@@ -63,6 +64,28 @@ test("presentation_create sends POST /v1/presentations", async () => {
   assert.deepEqual(JSON.parse(String(seen[0]!.body ?? "{}")), {
     "title": "example-title"
   });
+});
+
+test("presentation_get sends GET /v1/presentations/{presentationId}", async () => {
+  const { seen, transport } = capture();
+
+  await googleSlidesPresentationGet({
+    config: {
+      "presentationId": "example-presentationId"
+    },
+    credentials: CREDENTIALS,
+    mode: "live",
+    transport,
+  });
+
+  assert.equal(seen.length, 1);
+  assert.equal(seen[0]!.method, "GET");
+  assert.ok(new URL(seen[0]!.url).pathname.endsWith("/v1/presentations/example-presentationId"), seen[0]!.url);
+
+  assert.deepEqual(
+    Object.fromEntries(new URL(seen[0]!.url).searchParams),
+    {},
+  );
 });
 
 test("the credential is placed the way the provider wants it", async () => {

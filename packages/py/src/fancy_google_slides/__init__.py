@@ -18,10 +18,11 @@ from __future__ import annotations
 
 from ._fake import FakeValues
 from .actions.presentation_create import presentation_create
+from .actions.presentation_get import presentation_get
 from .faker import respond
 from .service import BASE_URLS, CONNECTOR_API_VERSION, REQUIRES, SANDBOX, SERVICE, TITLE, descriptor
 
-__version__ = "0.3.4"
+__version__ = "0.4.0"
 
 __all__ = [
     "BASE_URLS",
@@ -33,5 +34,6 @@ __all__ = [
     "FakeValues",
     "descriptor",
     "presentation_create",
+    "presentation_get",
     "respond",
 ]

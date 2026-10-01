@@ -1,0 +1,39 @@
+{
+  "$comment": "presentations.get -> GET v1/presentations/{presentationId}, response Presentation. Read from Google's own discovery document 2026-10-01. The path the discovery document declares uses RFC 6570 reserved expansion ({+presentationId}) -- NOT adopted here. google-analytics is this estate's one deliberate {+var} user and a guard test refuses a second until the cross-runtime encoding gap it is pinned against is settled (RULES.md); a presentationId never contains a slash, so plain brace expansion is correct and sufficient. No scope change -- the presentations scope presentation_create already holds covers read too.",
+  "operation": "presentation_get",
+  "kind": "presentation_get",
+  "title": "Google Slides presentation",
+  "description": "Read a presentation's slides and the objectId of every element on them -- the prerequisite for targeting a specific shape or placeholder with a future edit.",
+  "summary": "read a presentation",
+  "docs": "https://developers.google.com/workspace/slides/api/reference/rest/v1/presentations/get",
+  "sideEffects": "none",
+
+  "request": {
+    "method": "GET",
+    "path": "/v1/presentations/{presentationId}"
+  },
+
+  "config": [
+    {
+      "type": "text",
+      "key": "presentationId",
+      "label": "Presentation ID",
+      "required": true,
+      "description": "From presentation_create's data.presentationId, or the id in the presentation's own URL.",
+      "send": { "in": "path", "as": "presentationId", "value": "string" }
+    }
+  ],
+
+  "outputShape": [
+    { "path": "data.presentationId", "type": "string", "description": "Echoes what was asked." },
+    { "path": "data.title", "type": "string", "description": "The presentation's title." },
+    { "path": "data.locale", "type": "string", "description": "BCP 47 language tag." },
+    { "path": "data.slides", "type": "array", "description": "One entry per slide, in order: objectId, and pageElements -- each with its own objectId and exactly one of shape/image/table/line/video/wordArt/sheetsChart/elementGroup/speakerSpotlight set, naming what kind of element it is. A placeholder shape's text (when it has one) lives at pageElements[].shape.text, published raw -- this connector does not flatten Slides' own rich-text run structure." },
+    { "path": "mode", "type": "string", "description": "Which estate this ran against. Google has no sandbox, so: fake or live." }
+  ],
+
+  "contract": {
+    "sends": ["presentationId"],
+    "reads": ["presentationId", "title", "locale", "slides"]
+  }
+}

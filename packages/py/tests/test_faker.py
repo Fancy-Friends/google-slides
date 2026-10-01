@@ -33,6 +33,50 @@ def test_presentation_create_fakes_the_published_shape() -> None:
     }
 
 
+def test_presentation_get_fakes_the_published_shape() -> None:
+    config = {}
+    fake = FakeValues(seed_for_call("google_slides", "presentation_get", config))
+
+    faked = respond("presentation_get", {"config": config, "fake": fake})
+
+    assert faked == {
+        "presentationId": "1Slide_fake_f5354a08d2f8",
+        "title": "Untitled presentation",
+        "locale": "en",
+        "slides": [
+            {
+                "objectId": "slide_fake_186e6009598a",
+                "pageElements": [
+                    {
+                        "objectId": "title_fake_92815b64845d",
+                        "shape": {
+                            "shapeType": "TEXT_BOX",
+                            "placeholder": {
+                                "type": "CENTERED_TITLE",
+                            },
+                            "text": {
+                                "textElements": [],
+                            },
+                        },
+                    },
+                    {
+                        "objectId": "subtitle_fake_7603348102f0",
+                        "shape": {
+                            "shapeType": "TEXT_BOX",
+                            "placeholder": {
+                                "type": "SUBTITLE",
+                            },
+                            "text": {
+                                "textElements": [],
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+    }
+
+
 def test_an_operation_with_no_fixture_raises_rather_than_inventing_a_shape() -> None:
     fake = FakeValues(seed_for_call("google_slides", "no_such_operation", {}))
 

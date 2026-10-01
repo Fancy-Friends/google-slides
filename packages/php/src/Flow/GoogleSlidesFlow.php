@@ -40,6 +40,7 @@ final class GoogleSlidesFlow
     /** @var list<class-string> */
     public const EXECUTORS = [
         PresentationExecutor::class,
+        PresentationGetExecutor::class,
     ];
 
     /**

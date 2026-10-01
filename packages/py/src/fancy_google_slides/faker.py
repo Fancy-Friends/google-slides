@@ -47,6 +47,49 @@ def _presentation_create(config: dict[str, Any], fake: FakeValues) -> Any:
     }
 
 
+def _presentation_get(config: dict[str, Any], fake: FakeValues) -> Any:
+    return {
+        "presentationId": (
+            str(_v)
+            if (_v := config.get("presentationId")) is not None and _v != ""
+            else fake.id("1Slide")
+        ),
+        "title": "Untitled presentation",
+        "locale": "en",
+        "slides": [
+            {
+                "objectId": fake.id("slide"),
+                "pageElements": [
+                    {
+                        "objectId": fake.id("title"),
+                        "shape": {
+                            "shapeType": "TEXT_BOX",
+                            "placeholder": {
+                                "type": "CENTERED_TITLE",
+                            },
+                            "text": {
+                                "textElements": [],
+                            },
+                        },
+                    },
+                    {
+                        "objectId": fake.id("subtitle"),
+                        "shape": {
+                            "shapeType": "TEXT_BOX",
+                            "placeholder": {
+                                "type": "SUBTITLE",
+                            },
+                            "text": {
+                                "textElements": [],
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+    }
+
+
 def respond(operation: str, request: dict[str, Any]) -> Any:
     """Dispatch to the fixture for one operation."""
     config: dict[str, Any] = request.get("config") or {}
@@ -54,6 +97,9 @@ def respond(operation: str, request: dict[str, Any]) -> Any:
 
     if operation == "presentation_create":
         return _presentation_create(config, fake)
+
+    if operation == "presentation_get":
+        return _presentation_get(config, fake)
 
     # A faker asked for an operation it has no shape for must SAY so. Making
     # something up would produce a green run whose output silently has none of

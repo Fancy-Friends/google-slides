@@ -30,9 +30,11 @@ import { GOOGLE_SLIDES } from "./service.js";
 
 import {
   googleSlidesPresentationKind,
+  googleSlidesPresentationGetKind,
 } from "@particle-academy/google-slides-ui";
 
 import { googleSlidesPresentationCreate } from "./actions/presentation-create.js";
+import { googleSlidesPresentationGet } from "./actions/presentation-get.js";
 
 export const googleSlidesPresentationExecutor: NodeExecutor = async (ctx) => {
   const config = ((ctx.node.data as { config?: Record<string, unknown> })?.config ?? {});
@@ -52,7 +54,26 @@ export const googleSlidesPresentationExecutor: NodeExecutor = async (ctx) => {
   return { __port: "out", value: result };
 };
 
+export const googleSlidesPresentationGetExecutor: NodeExecutor = async (ctx) => {
+  const config = ((ctx.node.data as { config?: Record<string, unknown> })?.config ?? {});
+
+  const result = await googleSlidesPresentationGet({
+    config,
+    input: ctx.inputs?.in,
+  });
+
+  ctx.emit({
+    type: "log",
+    level: "info",
+    nodeId: ctx.node.id,
+    message: `google_slides presentation_get ${(result.data as { id?: string })?.id} (${result.mode})`,
+  });
+
+  return { __port: "out", value: result };
+};
+
 /** The kinds a TypeScript host registers. */
 export const GOOGLE_SLIDES_RUNNABLE_KINDS: NodeKindDefinition[] = [
   { ...googleSlidesPresentationKind, executor: googleSlidesPresentationExecutor },
+  { ...googleSlidesPresentationGetKind, executor: googleSlidesPresentationGetExecutor },
 ];

@@ -31,10 +31,52 @@ function fakePresentationCreate({ config, fake }: FakeRequest): unknown {
   };
 }
 
+function fakePresentationGet({ config, fake }: FakeRequest): unknown {
+  return {
+    "presentationId": (config.presentationId !== undefined && config.presentationId !== null && config.presentationId !== "" ? String(config.presentationId) : fake.id("1Slide")),
+    "title": "Untitled presentation",
+    "locale": "en",
+    "slides": [
+      {
+        "objectId": fake.id("slide"),
+        "pageElements": [
+          {
+            "objectId": fake.id("title"),
+            "shape": {
+              "shapeType": "TEXT_BOX",
+              "placeholder": {
+                "type": "CENTERED_TITLE",
+              },
+              "text": {
+                "textElements": [],
+              },
+            },
+          },
+          {
+            "objectId": fake.id("subtitle"),
+            "shape": {
+              "shapeType": "TEXT_BOX",
+              "placeholder": {
+                "type": "SUBTITLE",
+              },
+              "text": {
+                "textElements": [],
+              },
+            },
+          },
+        ],
+      },
+    ],
+  };
+}
+
 export const googleSlidesFaker: ConnectorFaker = (operation, request) => {
   switch (operation) {
     case "presentation_create":
       return fakePresentationCreate(request);
+
+    case "presentation_get":
+      return fakePresentationGet(request);
 
     default:
       // A faker asked for an operation it has no shape for must SAY so. Making

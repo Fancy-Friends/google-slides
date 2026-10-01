@@ -8,7 +8,9 @@
 # npm run provider -- google_slides
 
 from .presentation_create import presentation_create
+from .presentation_get import presentation_get
 
 __all__ = [
     "presentation_create",
+    "presentation_get",
 ]

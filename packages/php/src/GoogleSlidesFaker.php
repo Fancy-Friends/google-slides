@@ -36,6 +36,7 @@ final class GoogleSlidesFaker
 
         return match ($operation) {
             'presentation_create' => self::PresentationCreate($config, $fake),
+            'presentation_get' => self::PresentationGet($config, $fake),
             default => throw new \InvalidArgumentException(
                 // A faker asked for an operation it has no shape for must SAY so.
                 // Making something up would produce a green run whose output
@@ -53,6 +54,47 @@ final class GoogleSlidesFaker
         return [
         'presentationId' => $fake->id('1Slide'),
         'title' => ((($v = $config['title'] ?? null) !== null && $v !== '') ? (string) $v : 'Untitled presentation'),
+    ];
+    }
+
+    /** @param array<string,mixed> $config */
+    private static function PresentationGet(array $config, mixed $fake): array|\stdClass
+    {
+        return [
+        'presentationId' => ((($v = $config['presentationId'] ?? null) !== null && $v !== '') ? (string) $v : $fake->id('1Slide')),
+        'title' => 'Untitled presentation',
+        'locale' => 'en',
+        'slides' => [
+            [
+                'objectId' => $fake->id('slide'),
+                'pageElements' => [
+                    [
+                        'objectId' => $fake->id('title'),
+                        'shape' => [
+                            'shapeType' => 'TEXT_BOX',
+                            'placeholder' => [
+                                'type' => 'CENTERED_TITLE',
+                            ],
+                            'text' => [
+                                'textElements' => [],
+                            ],
+                        ],
+                    ],
+                    [
+                        'objectId' => $fake->id('subtitle'),
+                        'shape' => [
+                            'shapeType' => 'TEXT_BOX',
+                            'placeholder' => [
+                                'type' => 'SUBTITLE',
+                            ],
+                            'text' => [
+                                'textElements' => [],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
     ];
     }
 }

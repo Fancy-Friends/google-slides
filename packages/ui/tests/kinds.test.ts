@@ -33,6 +33,7 @@ test("every kind declares what it emits", () => {
 
 test("the registry names are exactly what the manifest says", () => {
   assert.deepEqual(GOOGLE_SLIDES_KINDS.map((kind) => kind.name), [
-    "@particle-academy/google_slides_presentation"
+    "@particle-academy/google_slides_presentation",
+    "@particle-academy/google_slides_presentation_get"
   ]);
 });

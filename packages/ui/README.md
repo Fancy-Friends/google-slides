@@ -77,6 +77,16 @@ Create a blank Google Slides presentation.
 |---|---|---|
 | `title` | yes | The title of the new blank presentation. |
 
+#### `presentation_get` — Google Slides presentation
+
+Read a presentation's slides and the objectId of every element on them -- the prerequisite for targeting a specific shape or placeholder with a future edit.
+
+`GET /v1/presentations/{presentationId}` · reads only — safe to replay
+
+| Input | Required | What it is |
+|---|---|---|
+| `presentationId` | yes | From presentation_create's data.presentationId, or the id in the presentation's own URL. |
+
 ## Run it before you have credentials
 
 Every operation ships a **faker**, whether or not Google Slides has a sandbox. Set a

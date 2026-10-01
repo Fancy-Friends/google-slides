@@ -19,11 +19,14 @@
 
 export * from "./service.js";
 export * from "./kinds/presentation-create.js";
+export * from "./kinds/presentation-get.js";
 
 import type { NodeKindDefinition } from "@particle-academy/fancy-flow/engine";
 import { googleSlidesPresentationKind } from "./kinds/presentation-create.js";
+import { googleSlidesPresentationGetKind } from "./kinds/presentation-get.js";
 
 /** Every Google Slides kind, for a host that registers the lot. */
 export const GOOGLE_SLIDES_KINDS: NodeKindDefinition[] = [
   googleSlidesPresentationKind,
+  googleSlidesPresentationGetKind,
 ];

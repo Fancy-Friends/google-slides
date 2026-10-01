@@ -42,6 +42,56 @@ it('presentation_create fakes the shape Google Slides publishes', function () {
     ]);
 });
 
+it('presentation_get fakes the shape Google Slides publishes', function () {
+    $config = [];
+    $fake = new FakeValues(FakeValues::seedForCall('google_slides', 'presentation_get', $config));
+
+    $faked = GoogleSlidesFaker::respond('presentation_get', ['config' => $config, 'fake' => $fake]);
+
+    // Through JSON and back, because a faked EMPTY object is a stdClass — the only
+    // PHP value that spells `{}` on the wire — and `toBe` compares objects by
+    // identity. This asserts the VALUES; the `{}`-versus-`[]` spelling is what
+    // weaver's cross-runtime parity suite asserts, byte for byte.
+    $faked = json_decode((string) json_encode($faked), true, 512, JSON_THROW_ON_ERROR);
+
+    expect($faked)->toBe([
+        'presentationId' => '1Slide_fake_f5354a08d2f8',
+        'title' => 'Untitled presentation',
+        'locale' => 'en',
+        'slides' => [
+            [
+                'objectId' => 'slide_fake_186e6009598a',
+                'pageElements' => [
+                    [
+                        'objectId' => 'title_fake_92815b64845d',
+                        'shape' => [
+                            'shapeType' => 'TEXT_BOX',
+                            'placeholder' => [
+                                'type' => 'CENTERED_TITLE',
+                            ],
+                            'text' => [
+                                'textElements' => [],
+                            ],
+                        ],
+                    ],
+                    [
+                        'objectId' => 'subtitle_fake_7603348102f0',
+                        'shape' => [
+                            'shapeType' => 'TEXT_BOX',
+                            'placeholder' => [
+                                'type' => 'SUBTITLE',
+                            ],
+                            'text' => [
+                                'textElements' => [],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ]);
+});
+
 it('throws for an operation with no fixture rather than inventing a shape', function () {
     $fake = new FakeValues(FakeValues::seedForCall('google_slides', 'no_such_operation', []));
 
