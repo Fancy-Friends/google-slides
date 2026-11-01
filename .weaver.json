@@ -52,7 +52,7 @@
     "packages/py/pyproject.toml": "008c2577de50997d5b33ed57037b662aafbd28d50f7067907c6d0050334fd6ca",
     "packages/py/src/fancy_google_slides/__init__.py": "596cbc080e71d287de76464271272ba0f92d55665d18a0848f70581a8997e8a4",
     "packages/py/src/fancy_google_slides/_fake.py": "cbe6e683721f0d0ee802a8f51f3ae81008fa3e832716d8a1e2a8d1a6f8a76a67",
-    "packages/py/src/fancy_google_slides/_runtime.py": "21d045bd027630e60d4ad70a227b4c3acdd7c290f1a27a5e1c3557e00e43df52",
+    "packages/py/src/fancy_google_slides/_runtime.py": "aa36ece9fe219797de77de8e4ee8e3de2dd7f7f80b5d13ae1e9e35d49808e798",
     "packages/py/src/fancy_google_slides/actions/__init__.py": "f2a57717b7df518529cef80b0b3aa7e085095799d1628f33667bb8ecc8935516",
     "packages/py/src/fancy_google_slides/actions/presentation_create.py": "70369f5494f6e344f933603ea784663a541c94197632b0dd02b8634512d7c23b",
     "packages/py/src/fancy_google_slides/actions/presentation_get.py": "2cf904dee76eee495286ac87f8c98a67e1b477c679e8bab2b52746c1a6416539",
