@@ -36,6 +36,22 @@ def _as_number(value: Any) -> float | None:
         return None
 
 
+def _batch_update(config: dict[str, Any], fake: FakeValues) -> Any:
+    return {
+        "presentationId": (
+            str(_v)
+            if (_v := config.get("presentationId")) is not None and _v != ""
+            else fake.id("1Slide")
+        ),
+        "replies": [
+            {},
+        ],
+        "writeControl": {
+            "requiredRevisionId": fake.hex(16),
+        },
+    }
+
+
 def _presentation_create(config: dict[str, Any], fake: FakeValues) -> Any:
     return {
         "presentationId": fake.id("1Slide"),
@@ -90,16 +106,42 @@ def _presentation_get(config: dict[str, Any], fake: FakeValues) -> Any:
     }
 
 
+def _text_replace(config: dict[str, Any], fake: FakeValues) -> Any:
+    return {
+        "presentationId": (
+            str(_v)
+            if (_v := config.get("presentationId")) is not None and _v != ""
+            else fake.id("1Slide")
+        ),
+        "replies": [
+            {
+                "replaceAllText": {
+                    "occurrencesChanged": fake.int(1, 9),
+                },
+            },
+        ],
+        "writeControl": {
+            "requiredRevisionId": fake.hex(16),
+        },
+    }
+
+
 def respond(operation: str, request: dict[str, Any]) -> Any:
     """Dispatch to the fixture for one operation."""
     config: dict[str, Any] = request.get("config") or {}
     fake: FakeValues = request["fake"]
+
+    if operation == "batch_update":
+        return _batch_update(config, fake)
 
     if operation == "presentation_create":
         return _presentation_create(config, fake)
 
     if operation == "presentation_get":
         return _presentation_get(config, fake)
+
+    if operation == "text_replace":
+        return _text_replace(config, fake)
 
     # A faker asked for an operation it has no shape for must SAY so. Making
     # something up would produce a green run whose output silently has none of

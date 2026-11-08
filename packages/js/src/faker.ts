@@ -24,6 +24,18 @@
 
 import type { ConnectorFaker, FakeRequest } from "@particle-academy/fancy-connector-core";
 
+function fakeBatchUpdate({ config, fake }: FakeRequest): unknown {
+  return {
+    "presentationId": (config.presentationId !== undefined && config.presentationId !== null && config.presentationId !== "" ? String(config.presentationId) : fake.id("1Slide")),
+    "replies": [
+      {},
+    ],
+    "writeControl": {
+      "requiredRevisionId": fake.hex(16),
+    },
+  };
+}
+
 function fakePresentationCreate({ config, fake }: FakeRequest): unknown {
   return {
     "presentationId": fake.id("1Slide"),
@@ -70,13 +82,35 @@ function fakePresentationGet({ config, fake }: FakeRequest): unknown {
   };
 }
 
+function fakeTextReplace({ config, fake }: FakeRequest): unknown {
+  return {
+    "presentationId": (config.presentationId !== undefined && config.presentationId !== null && config.presentationId !== "" ? String(config.presentationId) : fake.id("1Slide")),
+    "replies": [
+      {
+        "replaceAllText": {
+          "occurrencesChanged": fake.int(1, 9),
+        },
+      },
+    ],
+    "writeControl": {
+      "requiredRevisionId": fake.hex(16),
+    },
+  };
+}
+
 export const googleSlidesFaker: ConnectorFaker = (operation, request) => {
   switch (operation) {
+    case "batch_update":
+      return fakeBatchUpdate(request);
+
     case "presentation_create":
       return fakePresentationCreate(request);
 
     case "presentation_get":
       return fakePresentationGet(request);
+
+    case "text_replace":
+      return fakeTextReplace(request);
 
     default:
       // A faker asked for an operation it has no shape for must SAY so. Making

@@ -21,6 +21,23 @@ from fancy_google_slides._fake import FakeValues, seed_for_call
 from fancy_google_slides.faker import respond
 
 
+def test_batch_update_fakes_the_published_shape() -> None:
+    config = {}
+    fake = FakeValues(seed_for_call("google_slides", "batch_update", config))
+
+    faked = respond("batch_update", {"config": config, "fake": fake})
+
+    assert faked == {
+        "presentationId": "1Slide_fake_936418571db0",
+        "replies": [
+            {},
+        ],
+        "writeControl": {
+            "requiredRevisionId": "45a352bed1642dc4",
+        },
+    }
+
+
 def test_presentation_create_fakes_the_published_shape() -> None:
     config = {}
     fake = FakeValues(seed_for_call("google_slides", "presentation_create", config))
@@ -74,6 +91,27 @@ def test_presentation_get_fakes_the_published_shape() -> None:
                 ],
             },
         ],
+    }
+
+
+def test_text_replace_fakes_the_published_shape() -> None:
+    config = {}
+    fake = FakeValues(seed_for_call("google_slides", "text_replace", config))
+
+    faked = respond("text_replace", {"config": config, "fake": fake})
+
+    assert faked == {
+        "presentationId": "1Slide_fake_529731fd21b1",
+        "replies": [
+            {
+                "replaceAllText": {
+                    "occurrencesChanged": 1,
+                },
+            },
+        ],
+        "writeControl": {
+            "requiredRevisionId": "5a08fca9f6223287",
+        },
     }
 
 

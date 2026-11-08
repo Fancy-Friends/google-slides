@@ -16,6 +16,19 @@ from fancy_google_slides.faker import respond
 
 GOLDENS = [
     {
+        "operation": "batch_update",
+        "config": {},
+        "expected": {
+            "presentationId": "1Slide_fake_936418571db0",
+            "replies": [
+                {},
+            ],
+            "writeControl": {
+                "requiredRevisionId": "45a352bed1642dc4",
+            },
+        },
+    },
+    {
         "operation": "presentation_create",
         "config": {},
         "expected": {
@@ -61,6 +74,23 @@ GOLDENS = [
                     ],
                 },
             ],
+        },
+    },
+    {
+        "operation": "text_replace",
+        "config": {},
+        "expected": {
+            "presentationId": "1Slide_fake_529731fd21b1",
+            "replies": [
+                {
+                    "replaceAllText": {
+                        "occurrencesChanged": 1,
+                    },
+                },
+            ],
+            "writeControl": {
+                "requiredRevisionId": "5a08fca9f6223287",
+            },
         },
     },
 ]

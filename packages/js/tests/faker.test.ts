@@ -25,6 +25,22 @@ import { fakeRequest } from "@particle-academy/fancy-connector-core";
 
 import { googleSlidesFaker } from "../src/faker.js";
 
+test("batch_update fakes the shape Google Slides publishes", () => {
+  const config = {};
+
+  const faked = googleSlidesFaker("batch_update", fakeRequest("google_slides", "batch_update", config));
+
+  assert.deepEqual(faked, {
+    "presentationId": "1Slide_fake_936418571db0",
+    "replies": [
+      {}
+    ],
+    "writeControl": {
+      "requiredRevisionId": "45a352bed1642dc4"
+    }
+  });
+});
+
 test("presentation_create fakes the shape Google Slides publishes", () => {
   const config = {};
 
@@ -76,6 +92,26 @@ test("presentation_get fakes the shape Google Slides publishes", () => {
         ]
       }
     ]
+  });
+});
+
+test("text_replace fakes the shape Google Slides publishes", () => {
+  const config = {};
+
+  const faked = googleSlidesFaker("text_replace", fakeRequest("google_slides", "text_replace", config));
+
+  assert.deepEqual(faked, {
+    "presentationId": "1Slide_fake_529731fd21b1",
+    "replies": [
+      {
+        "replaceAllText": {
+          "occurrencesChanged": 1
+        }
+      }
+    ],
+    "writeControl": {
+      "requiredRevisionId": "5a08fca9f6223287"
+    }
   });
 });
 

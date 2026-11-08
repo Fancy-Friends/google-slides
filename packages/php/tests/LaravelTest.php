@@ -24,16 +24,18 @@ it('registers through its service provider and merges its config', function () {
     expect(config('connectors.google-slides.credentials'))->toBeArray();
 });
 
-it('fakes presentation_create and records it for assertSent', function () {
+it('fakes batch_update and records it for assertSent', function () {
     TestApp::boot();
     GoogleSlides::fake();
     $config = [
-        'title' => 'example-title',
+        'presentationId' => 'example-presentationId',
+        'requests' => '[{"type":"section","text":{"type":"mrkdwn","text":"Ticket *42*"}}]',
+        'requiredRevisionId' => 'example-requiredRevisionId',
     ];
-    $result = GoogleSlides::call('presentation_create', $config);
+    $result = GoogleSlides::call('batch_update', $config);
 
     expect($result->mode->value)->toBe('fake');
-    GoogleSlides::assertSent('presentation_create', fn (array $sent): bool => $sent == $config);
+    GoogleSlides::assertSent('batch_update', fn (array $sent): bool => $sent == $config);
     GoogleSlides::assertNotSent('no_such_operation');
     GoogleSlides::assertSentCount(1);
 });

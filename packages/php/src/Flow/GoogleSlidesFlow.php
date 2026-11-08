@@ -39,8 +39,10 @@ final class GoogleSlidesFlow
 {
     /** @var list<class-string> */
     public const EXECUTORS = [
+        BatchUpdateExecutor::class,
         PresentationExecutor::class,
         PresentationGetExecutor::class,
+        TextReplaceExecutor::class,
     ];
 
     /**

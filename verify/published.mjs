@@ -43,6 +43,19 @@ console.log(`  ok   resolved from ${resolved}`);
 
 const GOLDENS = [
   {
+    "operation": "batch_update",
+    "config": {},
+    "expected": {
+      "presentationId": "1Slide_fake_936418571db0",
+      "replies": [
+        {}
+      ],
+      "writeControl": {
+        "requiredRevisionId": "45a352bed1642dc4"
+      }
+    }
+  },
+  {
     "operation": "presentation_create",
     "config": {},
     "expected": {
@@ -89,6 +102,23 @@ const GOLDENS = [
         }
       ]
     }
+  },
+  {
+    "operation": "text_replace",
+    "config": {},
+    "expected": {
+      "presentationId": "1Slide_fake_529731fd21b1",
+      "replies": [
+        {
+          "replaceAllText": {
+            "occurrencesChanged": 1
+          }
+        }
+      ],
+      "writeControl": {
+        "requiredRevisionId": "5a08fca9f6223287"
+      }
+    }
   }
 ];
 
@@ -105,7 +135,7 @@ for (const { operation, config, expected } of GOLDENS) {
 
 // The ui package is a separate tarball, and js depends on it by its
 // published name — so this also proves that dependency resolves.
-assert.equal(GOOGLE_SLIDES_KINDS.length, 2);
+assert.equal(GOOGLE_SLIDES_KINDS.length, 4);
 for (const kind of GOOGLE_SLIDES_KINDS) {
   const keys = kind.configSchema.map((field) => field.key);
   assert.equal(keys[0], "connection");

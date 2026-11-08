@@ -24,6 +24,29 @@ use ParticleAcademy\Connectors\FakeValues;
  * path, with no error.
  */
 
+it('batch_update fakes the shape Google Slides publishes', function () {
+    $config = [];
+    $fake = new FakeValues(FakeValues::seedForCall('google_slides', 'batch_update', $config));
+
+    $faked = GoogleSlidesFaker::respond('batch_update', ['config' => $config, 'fake' => $fake]);
+
+    // Through JSON and back, because a faked EMPTY object is a stdClass — the only
+    // PHP value that spells `{}` on the wire — and `toBe` compares objects by
+    // identity. This asserts the VALUES; the `{}`-versus-`[]` spelling is what
+    // weaver's cross-runtime parity suite asserts, byte for byte.
+    $faked = json_decode((string) json_encode($faked), true, 512, JSON_THROW_ON_ERROR);
+
+    expect($faked)->toBe([
+        'presentationId' => '1Slide_fake_936418571db0',
+        'replies' => [
+            [],
+        ],
+        'writeControl' => [
+            'requiredRevisionId' => '45a352bed1642dc4',
+        ],
+    ]);
+});
+
 it('presentation_create fakes the shape Google Slides publishes', function () {
     $config = [];
     $fake = new FakeValues(FakeValues::seedForCall('google_slides', 'presentation_create', $config));
@@ -88,6 +111,33 @@ it('presentation_get fakes the shape Google Slides publishes', function () {
                     ],
                 ],
             ],
+        ],
+    ]);
+});
+
+it('text_replace fakes the shape Google Slides publishes', function () {
+    $config = [];
+    $fake = new FakeValues(FakeValues::seedForCall('google_slides', 'text_replace', $config));
+
+    $faked = GoogleSlidesFaker::respond('text_replace', ['config' => $config, 'fake' => $fake]);
+
+    // Through JSON and back, because a faked EMPTY object is a stdClass — the only
+    // PHP value that spells `{}` on the wire — and `toBe` compares objects by
+    // identity. This asserts the VALUES; the `{}`-versus-`[]` spelling is what
+    // weaver's cross-runtime parity suite asserts, byte for byte.
+    $faked = json_decode((string) json_encode($faked), true, 512, JSON_THROW_ON_ERROR);
+
+    expect($faked)->toBe([
+        'presentationId' => '1Slide_fake_529731fd21b1',
+        'replies' => [
+            [
+                'replaceAllText' => [
+                    'occurrencesChanged' => 1,
+                ],
+            ],
+        ],
+        'writeControl' => [
+            'requiredRevisionId' => '5a08fca9f6223287',
         ],
     ]);
 });

@@ -1,0 +1,86 @@
+{
+  "$comment": "v1/presentations.batchUpdate -> POST v1/presentations/{presentationId}:batchUpdate. The requests array is Google's own, passed through as JSON (send.value json) -- every Request kind Google offers, applied ATOMICALLY: if one request is invalid, none is applied. Read from Google's discovery document 2026-11-08.",
+  "operation": "batch_update",
+  "kind": "batch_update",
+  "title": "Batch update a Google Slides presentation",
+  "description": "Apply a list of Google Slides presentation API requests to a presentation, all or none.",
+  "summary": "batch update a presentation",
+  "docs": "https://developers.google.com/workspace/slides/api/reference/rest/v1/presentations/batchUpdate",
+  "sideEffects": "unsafe-to-replay",
+  "$idempotencyComment": "batchUpdate declares no idempotency key. Whether a retry is safe depends on the requests: a replace is usually a no-op the second time, an insert is not.",
+  "request": {
+    "method": "POST",
+    "path": "/v1/presentations/{presentationId}:batchUpdate",
+    "encoding": "json"
+  },
+  "config": [
+    {
+      "type": "text",
+      "key": "presentationId",
+      "label": "Presentation ID",
+      "required": true,
+      "description": "From presentation_create's data.presentationId, or the id in the presentation's own URL.",
+      "send": {
+        "in": "path",
+        "as": "presentationId",
+        "value": "string"
+      }
+    },
+    {
+      "type": "json",
+      "key": "requests",
+      "label": "Requests",
+      "required": true,
+      "description": "Google's Request objects, in order. Example: [{\"replaceAllText\":{\"containsText\":{\"text\":\"{{name}}\",\"matchCase\":true},\"replaceText\":\"Ada\"}}].",
+      "send": {
+        "in": "body",
+        "as": "requests",
+        "value": "json"
+      }
+    },
+    {
+      "type": "text",
+      "key": "requiredRevisionId",
+      "label": "Required revision ID",
+      "description": "Optional. The presentation's revisionId as you last read it. If the presentation has changed since, Google refuses the whole batch with a 400 instead of applying it to content you have not seen.",
+      "send": {
+        "as": "writeControl.requiredRevisionId",
+        "value": "string"
+      }
+    }
+  ],
+  "outputShape": [
+    {
+      "path": "data.presentationId",
+      "type": "string",
+      "description": "The presentation updated."
+    },
+    {
+      "path": "data.replies",
+      "type": "array",
+      "description": "One reply per request, in order. Many kinds reply with an empty object."
+    },
+    {
+      "path": "data.writeControl.requiredRevisionId",
+      "type": "string",
+      "description": "The presentation's revision after the update; pass it to the next batch to guard it."
+    },
+    {
+      "path": "mode",
+      "type": "string",
+      "description": "Which estate this ran against. Google has no sandbox, so: fake or live."
+    }
+  ],
+  "contract": {
+    "sends": [
+      "presentationId",
+      "requests",
+      "writeControl"
+    ],
+    "reads": [
+      "presentationId",
+      "replies",
+      "writeControl"
+    ]
+  }
+}

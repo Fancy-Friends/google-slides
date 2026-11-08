@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace ParticleAcademy\GoogleSlides\Laravel;
 
+use ParticleAcademy\GoogleSlides\Actions\BatchUpdate;
 use ParticleAcademy\GoogleSlides\Actions\PresentationCreate;
 use ParticleAcademy\GoogleSlides\Actions\PresentationGet;
+use ParticleAcademy\GoogleSlides\Actions\TextReplace;
 use ParticleAcademy\GoogleSlides\GoogleSlides;
 use InvalidArgumentException;
 use ParticleAcademy\Connectors\ConnectorClient;
@@ -49,10 +51,36 @@ class GoogleSlidesClient
         );
 
         return match ($operation) {
+            BatchUpdate::OPERATION => $this->batchUpdate($config, $input, $idempotencyKey, $credentials, $transport),
             PresentationCreate::OPERATION => $this->presentationCreate($config, $input, $idempotencyKey, $credentials, $transport),
             PresentationGet::OPERATION => $this->presentationGet($config, $input, $idempotencyKey, $credentials, $transport),
+            TextReplace::OPERATION => $this->textReplace($config, $input, $idempotencyKey, $credentials, $transport),
             default => throw new InvalidArgumentException('google_slides: '.$operation.' is not an action of this connector.'),
         };
+    }
+
+    /**
+     * @param  array<string,mixed>  $config
+     * @param  array<string,string>  $credentials
+     */
+    private function batchUpdate(array $config, mixed $input, ?string $idempotencyKey, array $credentials, ?Transport $transport): ConnectorResult
+    {
+        unset($idempotencyKey);
+        $result = ($this->client ?? new ConnectorClient)->call(
+            GoogleSlides::descriptor(),
+            BatchUpdate::OPERATION,
+            $config,
+            [
+                'method' => BatchUpdate::METHOD,
+                'path' => BatchUpdate::path($config),
+                'json' => BatchUpdate::body($config),
+            ],
+            $input,
+            credentials: $credentials === [] ? null : $credentials,
+            transport: $transport,
+        );
+
+        return $result;
     }
 
     /**
@@ -94,6 +122,30 @@ class GoogleSlidesClient
                 'method' => PresentationGet::METHOD,
                 'path' => PresentationGet::path($config),
                 'query' => PresentationGet::body($config),
+            ],
+            $input,
+            credentials: $credentials === [] ? null : $credentials,
+            transport: $transport,
+        );
+
+        return $result;
+    }
+
+    /**
+     * @param  array<string,mixed>  $config
+     * @param  array<string,string>  $credentials
+     */
+    private function textReplace(array $config, mixed $input, ?string $idempotencyKey, array $credentials, ?Transport $transport): ConnectorResult
+    {
+        unset($idempotencyKey);
+        $result = ($this->client ?? new ConnectorClient)->call(
+            GoogleSlides::descriptor(),
+            TextReplace::OPERATION,
+            $config,
+            [
+                'method' => TextReplace::METHOD,
+                'path' => TextReplace::path($config),
+                'json' => TextReplace::body($config),
             ],
             $input,
             credentials: $credentials === [] ? null : $credentials,

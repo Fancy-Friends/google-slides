@@ -35,8 +35,10 @@ final class GoogleSlidesFaker
         $fake = $request['fake'];
 
         return match ($operation) {
+            'batch_update' => self::BatchUpdate($config, $fake),
             'presentation_create' => self::PresentationCreate($config, $fake),
             'presentation_get' => self::PresentationGet($config, $fake),
+            'text_replace' => self::TextReplace($config, $fake),
             default => throw new \InvalidArgumentException(
                 // A faker asked for an operation it has no shape for must SAY so.
                 // Making something up would produce a green run whose output
@@ -46,6 +48,20 @@ final class GoogleSlidesFaker
                     .'cannot be developed against, tested, or demonstrated.'
             ),
         };
+    }
+
+    /** @param array<string,mixed> $config */
+    private static function BatchUpdate(array $config, mixed $fake): array|\stdClass
+    {
+        return [
+        'presentationId' => ((($v = $config['presentationId'] ?? null) !== null && $v !== '') ? (string) $v : $fake->id('1Slide')),
+        'replies' => [
+            new \stdClass(),
+        ],
+        'writeControl' => [
+            'requiredRevisionId' => $fake->hex(16),
+        ],
+    ];
     }
 
     /** @param array<string,mixed> $config */
@@ -94,6 +110,24 @@ final class GoogleSlidesFaker
                     ],
                 ],
             ],
+        ],
+    ];
+    }
+
+    /** @param array<string,mixed> $config */
+    private static function TextReplace(array $config, mixed $fake): array|\stdClass
+    {
+        return [
+        'presentationId' => ((($v = $config['presentationId'] ?? null) !== null && $v !== '') ? (string) $v : $fake->id('1Slide')),
+        'replies' => [
+            [
+                'replaceAllText' => [
+                    'occurrencesChanged' => $fake->int(1, 9),
+                ],
+            ],
+        ],
+        'writeControl' => [
+            'requiredRevisionId' => $fake->hex(16),
         ],
     ];
     }
