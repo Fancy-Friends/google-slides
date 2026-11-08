@@ -29,12 +29,34 @@ import {
 import { GOOGLE_SLIDES } from "./service.js";
 
 import {
+  googleSlidesBatchUpdateKind,
   googleSlidesPresentationKind,
   googleSlidesPresentationGetKind,
+  googleSlidesTextReplaceKind,
 } from "@particle-academy/google-slides-ui";
 
+import { googleSlidesBatchUpdate } from "./actions/batch-update.js";
 import { googleSlidesPresentationCreate } from "./actions/presentation-create.js";
 import { googleSlidesPresentationGet } from "./actions/presentation-get.js";
+import { googleSlidesTextReplace } from "./actions/text-replace.js";
+
+export const googleSlidesBatchUpdateExecutor: NodeExecutor = async (ctx) => {
+  const config = ((ctx.node.data as { config?: Record<string, unknown> })?.config ?? {});
+
+  const result = await googleSlidesBatchUpdate({
+    config,
+    input: ctx.inputs?.in,
+  });
+
+  ctx.emit({
+    type: "log",
+    level: "info",
+    nodeId: ctx.node.id,
+    message: `google_slides batch_update ${(result.data as { id?: string })?.id} (${result.mode})`,
+  });
+
+  return { __port: "out", value: result };
+};
 
 export const googleSlidesPresentationExecutor: NodeExecutor = async (ctx) => {
   const config = ((ctx.node.data as { config?: Record<string, unknown> })?.config ?? {});
@@ -72,8 +94,28 @@ export const googleSlidesPresentationGetExecutor: NodeExecutor = async (ctx) => 
   return { __port: "out", value: result };
 };
 
+export const googleSlidesTextReplaceExecutor: NodeExecutor = async (ctx) => {
+  const config = ((ctx.node.data as { config?: Record<string, unknown> })?.config ?? {});
+
+  const result = await googleSlidesTextReplace({
+    config,
+    input: ctx.inputs?.in,
+  });
+
+  ctx.emit({
+    type: "log",
+    level: "info",
+    nodeId: ctx.node.id,
+    message: `google_slides text_replace ${(result.data as { id?: string })?.id} (${result.mode})`,
+  });
+
+  return { __port: "out", value: result };
+};
+
 /** The kinds a TypeScript host registers. */
 export const GOOGLE_SLIDES_RUNNABLE_KINDS: NodeKindDefinition[] = [
+  { ...googleSlidesBatchUpdateKind, executor: googleSlidesBatchUpdateExecutor },
   { ...googleSlidesPresentationKind, executor: googleSlidesPresentationExecutor },
   { ...googleSlidesPresentationGetKind, executor: googleSlidesPresentationGetExecutor },
+  { ...googleSlidesTextReplaceKind, executor: googleSlidesTextReplaceExecutor },
 ];

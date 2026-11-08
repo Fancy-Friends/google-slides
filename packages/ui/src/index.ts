@@ -18,15 +18,21 @@
  */
 
 export * from "./service.js";
+export * from "./kinds/batch-update.js";
 export * from "./kinds/presentation-create.js";
 export * from "./kinds/presentation-get.js";
+export * from "./kinds/text-replace.js";
 
 import type { NodeKindDefinition } from "@particle-academy/fancy-flow/engine";
+import { googleSlidesBatchUpdateKind } from "./kinds/batch-update.js";
 import { googleSlidesPresentationKind } from "./kinds/presentation-create.js";
 import { googleSlidesPresentationGetKind } from "./kinds/presentation-get.js";
+import { googleSlidesTextReplaceKind } from "./kinds/text-replace.js";
 
 /** Every Google Slides kind, for a host that registers the lot. */
 export const GOOGLE_SLIDES_KINDS: NodeKindDefinition[] = [
+  googleSlidesBatchUpdateKind,
   googleSlidesPresentationKind,
   googleSlidesPresentationGetKind,
+  googleSlidesTextReplaceKind,
 ];

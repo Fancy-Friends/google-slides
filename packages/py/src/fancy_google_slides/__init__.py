@@ -17,12 +17,14 @@ dependency.
 from __future__ import annotations
 
 from ._fake import FakeValues
+from .actions.batch_update import batch_update
 from .actions.presentation_create import presentation_create
 from .actions.presentation_get import presentation_get
+from .actions.text_replace import text_replace
 from .faker import respond
 from .service import BASE_URLS, CONNECTOR_API_VERSION, REQUIRES, SANDBOX, SERVICE, TITLE, descriptor
 
-__version__ = "0.6.0"
+__version__ = "0.7.0"
 
 __all__ = [
     "BASE_URLS",
@@ -32,8 +34,10 @@ __all__ = [
     "SERVICE",
     "TITLE",
     "FakeValues",
+    "batch_update",
     "descriptor",
     "presentation_create",
     "presentation_get",
     "respond",
+    "text_replace",
 ]

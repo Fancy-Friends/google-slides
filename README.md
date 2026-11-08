@@ -74,6 +74,18 @@ The refresh tokens do **not** rotate: the same one is reusable, so a refresh may
 
 ### Actions
 
+#### `batch_update` — Batch update a Google Slides presentation
+
+Apply a list of Google Slides presentation API requests to a presentation, all or none.
+
+`POST /v1/presentations/{presentationId}:batchUpdate` · **unsafe to replay** — a retried durable run does it TWICE
+
+| Input | Required | What it is |
+|---|---|---|
+| `presentationId` | yes | From presentation_create's data.presentationId, or the id in the presentation's own URL. |
+| `requests` | yes | Google's Request objects, in order. Example: [{"replaceAllText":{"containsText":{"text":"{{name}}","matchCase":true},"replaceText":"Ada"}}]. |
+| `requiredRevisionId` | no | Optional. The presentation's revisionId as you last read it. If the presentation has changed since, Google refuses the whole batch with a 400 instead of applying it to content you have not seen. |
+
 #### `presentation_create` — Google Slides presentation
 
 Create a blank Google Slides presentation.
@@ -93,6 +105,21 @@ Read a presentation's slides and the objectId of every element on them -- the pr
 | Input | Required | What it is |
 |---|---|---|
 | `presentationId` | yes | From presentation_create's data.presentationId, or the id in the presentation's own URL. |
+
+#### `text_replace` — Replace text in a Google Slides presentation
+
+Replace every occurrence of a string in a presentation.
+
+`POST /v1/presentations/{presentationId}:batchUpdate` · **unsafe to replay** — a retried durable run does it TWICE
+
+| Input | Required | What it is |
+|---|---|---|
+| `presentationId` | yes | From presentation_create's data.presentationId, or the id in the presentation's own URL. |
+| `find` | yes | The exact text to find, e.g. {{name}}. Not a regular expression. |
+| `replaceWith` | yes | Inserted in place of every match. Empty is refused: to delete text, use batch_update. |
+| `matchCase` | no | Off matches case-insensitively, which is also what Google does when it is not sent. |
+| `pageObjectIds` | no | Optional. Slide objectIds, comma separated (from presentation_get). Empty means every slide. |
+| `requiredRevisionId` | no | Optional. The presentation's revisionId as you last read it. If the presentation has changed since, Google refuses the whole batch with a 400 instead of applying it to content you have not seen. |
 
 ## Run it before you have credentials
 

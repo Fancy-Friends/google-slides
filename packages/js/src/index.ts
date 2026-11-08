@@ -21,5 +21,7 @@
 
 export * from "./service.js";
 export * from "./faker.js";
+export * from "./actions/batch-update.js";
 export * from "./actions/presentation-create.js";
 export * from "./actions/presentation-get.js";
+export * from "./actions/text-replace.js";

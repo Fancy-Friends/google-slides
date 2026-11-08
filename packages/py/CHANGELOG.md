@@ -8,6 +8,18 @@ The four packages share one version, because they are generated from one
 `provider/` definition and a version that meant something different in each
 would be a version nobody could reason about.
 
+## [0.7.0] — 2026-11-08
+
+### Added
+
+- **`text_replace`**: replace every occurrence of a string in a presentation
+  (Google's `replaceAllText`), optionally only on the slides named in
+  `pageObjectIds`. Publishes `occurrencesChanged`; 0 means not found.
+- **`batch_update`**: any list of Google Slides API requests, as JSON, applied
+  all or none.
+- Both take an optional **`requiredRevisionId`**: if the presentation has
+  changed since you read it, Google refuses the whole batch.
+
 ## [0.6.0] — 2026-11-08
 
 ### Added

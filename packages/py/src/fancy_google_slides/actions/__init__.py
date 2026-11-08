@@ -7,10 +7,14 @@
 #
 # npm run provider -- google_slides
 
+from .batch_update import batch_update
 from .presentation_create import presentation_create
 from .presentation_get import presentation_get
+from .text_replace import text_replace
 
 __all__ = [
+    "batch_update",
     "presentation_create",
     "presentation_get",
+    "text_replace",
 ]
